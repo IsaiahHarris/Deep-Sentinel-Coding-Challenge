@@ -31,7 +31,7 @@ function createGraphValid(data) {
     bindto: '#chart',
     data: {
       columns: [silverMinted],
-      type: 'bar'
+      type: 'line'
     },
     bar: {
       width: 1
