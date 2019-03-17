@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-import './Ratio.scss';
 import Papa from 'papaparse';
 import c3 from 'c3';
 
-console.log('ratio');
-function parseData(createGraph) {
-  Papa.parse(require('../data/ratio.csv'), {
+function parseDataValid(createGraphVaild) {
+  Papa.parse(require('../data/valid-invalid.csv'), {
     download: true,
     complete: function(results) {
-      createGraph(results.data);
+      createGraphValid(results.data);
     }
   });
 }
 
-function createGraph(data) {
+function createGraphValid(data) {
   var years = [];
   var silverMinted = ['Silver Minted'];
   for (var i = 1; i < data.length; i++) {
@@ -29,7 +27,7 @@ function createGraph(data) {
     }
   }
 
-  let chart = c3.generate({
+  let chartValid = c3.generate({
     bindto: '#chart',
     data: {
       columns: [silverMinted],
@@ -42,18 +40,19 @@ function createGraph(data) {
     }
   });
 }
-class Ratio extends Component {
+
+class ValidInvalid extends Component {
   componentDidMount() {
-    parseData(createGraph);
+    parseDataValid(createGraphValid);
   }
   render() {
     return (
-      <div className="ratio-container">
-        <div className="ratio-header">Ratio</div>
+      <div className="valid-invalid-container">
+        <div className="header">header</div>
         <div id="chart" />
       </div>
     );
   }
 }
 
-export default Ratio;
+export default ValidInvalid;
