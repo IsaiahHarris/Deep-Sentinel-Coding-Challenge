@@ -5,15 +5,11 @@
   .ratio-header {
     font-size: 22px;
     width: 100%;
+    height: 60px;
     max-width: 980px;
     display: flex;
     justify-content: center;
-    height: 60px;
     align-items: center;
-    .title {
-    }
-    #month {
-    }
     .select-container {
       position: relative;
       background-color: #e6e6e6;
@@ -51,19 +47,8 @@
       }
     }
   }
-  #histogram {
-    max-width: 980px;
-    width: 90%;
-  }
-
-  #line {
-    max-width: 980px;
-    width: 90%;
-  }
-  #bar {
-    max-width: 980px;
-    width: 90%;
-  }
+  #histogram,
+  #line,
   #pie {
     max-width: 980px;
     width: 90%;

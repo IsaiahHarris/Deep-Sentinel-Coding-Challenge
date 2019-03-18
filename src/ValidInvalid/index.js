@@ -39,6 +39,7 @@ class ValidInvalid extends Component {
       }
     });
   }
+
   createGraph(data) {
     let renderData = ['Valid / Invalid'];
 
@@ -64,6 +65,7 @@ class ValidInvalid extends Component {
         width: 1
       }
     });
+
     let line = c3.generate({
       bindto: '#line',
       data: {
@@ -81,29 +83,34 @@ class ValidInvalid extends Component {
   componentDidMount() {
     this.parseData(this.createGraph);
   }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.month !== this.state.month) {
       this.parseData(this.createGraph);
     }
   }
+
   render() {
     return (
       <div className="valid-container">
-        <div className="valid-header">Valid / Invalid</div>
-        <select
-          name="month"
-          id="month"
-          value={this.state.categoryInput}
-          onChange={this.handleInputChange('month')}
-        >
-          {this.state.months.map((month, key) => {
-            return (
-              <option key={key} value={'0' + (key + 1)}>
-                {month}
-              </option>
-            );
-          })}
-        </select>
+        <div className="valid-header">
+          <div className="select-container">
+            <select
+              name="month"
+              id="month"
+              value={this.state.categoryInput}
+              onChange={this.handleInputChange('month')}
+            >
+              {this.state.months.map((month, key) => {
+                return (
+                  <option key={key} value={'0' + (key + 1)}>
+                    {month}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
         <div id="histogram" />
         <div id="line" />
       </div>

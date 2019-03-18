@@ -38,9 +38,9 @@ class Ratio extends Component {
       }
     });
   }
+
   createGraph(data) {
     let renderData = ['Ratio'];
-
     for (let i = 0; i < data.length; i++) {
       let month = data[i][5] + data[i][6];
       if (month === this.state.month) {
@@ -61,12 +61,14 @@ class Ratio extends Component {
         width: 1
       }
     });
+
     let line = c3.generate({
       bindto: '#line',
       data: {
         columns: [this.state.data]
       }
     });
+
     let pie = c3.generate({
       bindto: '#pie',
       data: {
@@ -90,16 +92,17 @@ class Ratio extends Component {
   componentDidMount() {
     this.parseData(this.createGraph);
   }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.month !== this.state.month) {
       this.parseData(this.createGraph);
     }
   }
+
   render() {
     return (
       <div className="ratio-container">
         <div className="ratio-header">
-          <div className="title">Ratio</div>
           <div className="select-container">
             <select
               name="month"
