@@ -3,54 +3,145 @@ import './Ratio.scss';
 import Papa from 'papaparse';
 import c3 from 'c3';
 
-console.log('ratio');
-function parseData(createGraph) {
-  Papa.parse(require('../data/ratio.csv'), {
-    download: true,
-    complete: function(results) {
-      createGraph(results.data);
-    }
-  });
-}
+class Ratio extends Component {
+  constructor(props) {
+    super(props);
 
-function createGraph(data) {
-  var years = [];
-  var silverMinted = ['Silver Minted'];
-  for (var i = 1; i < data.length; i++) {
-    if (data[i][0]) {
-      years.push(data[i][0]);
-    } else {
-      years.push(0);
-    }
-    if (data[i][2]) {
-      silverMinted.push(data[i][2]);
-    } else {
-      silverMinted.push(0);
-    }
+    this.state = {
+      data: [],
+      month: '01',
+      months: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ]
+    };
+    this.createGraph = this.createGraph.bind(this);
+    this.parseData = this.parseData.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  let chart = c3.generate({
-    bindto: '#chart',
-    data: {
-      columns: [silverMinted],
-      type: 'bar'
-    },
-    bar: {
-      width: 1
-      // or
-      //width: 100 // this makes bar width 100px
+  parseData(createGraph) {
+    Papa.parse(require('../data/ratio.csv'), {
+      download: true,
+      complete: function(results) {
+        createGraph(results.data);
+      }
+    });
+  }
+  createGraph(data) {
+    let renderData = ['Ratio'];
+
+    for (let i = 0; i < data.length; i++) {
+      let month = data[i][5] + data[i][6];
+      if (month === this.state.month) {
+        renderData.push(data[i][2]);
+        this.setState({
+          data: renderData
+        });
+      }
     }
-  });
-}
-class Ratio extends Component {
+
+    let histogram = c3.generate({
+      bindto: '#histogram',
+      data: {
+        columns: [this.state.data],
+        type: 'bar'
+      },
+      bar: {
+        width: 1
+      }
+    });
+    let line = c3.generate({
+      bindto: '#line',
+      data: {
+        columns: [this.state.data]
+      },
+      color: {
+        pattern: ['#1f77b4', '#aec7e8']
+      }
+    });
+    let pie = c3.generate({
+      bindto: '#pie',
+      data: {
+        columns: [
+          ['Ratio 1', ...this.state.data],
+          ['Ratio 2', ...this.state.data],
+          ['Ratio 3', ...this.state.data],
+          ['Ratio 4', ...this.state.data]
+        ],
+        type: 'pie'
+      }
+    });
+  }
+  // createLine(data, type) {
+  //   let renderData = ['Ratio'];
+  //   for (let i = 0; i < data.length; i++) {
+  //     let month = data[i][5] + data[i][6];
+  //     if (month === this.state.month) {
+  //       renderData.push(data[i][2]);
+  //       this.setState({
+  //         data: renderData
+  //       });
+  //     }
+  //   }
+
+  //   let histogram = c3.generate({
+  //     bindto: '#histogram',
+  //     data: {
+  //       columns: [this.state.data],
+  //       type: type
+  //     },
+  //     bar: {
+  //       width: 1
+  //     }
+  //   });
+  // }
+
+  handleInputChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
   componentDidMount() {
-    parseData(createGraph);
+    this.parseData(this.createGraph);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.month !== this.state.month) {
+      this.parseData(this.createGraph);
+    }
   }
   render() {
     return (
       <div className="ratio-container">
         <div className="ratio-header">Ratio</div>
-        <div id="chart" />
+        <select
+          name="month"
+          id="month"
+          value={this.state.categoryInput}
+          onChange={this.handleInputChange('month')}
+        >
+          {this.state.months.map((month, key) => {
+            return (
+              <option key={key} value={'0' + (key + 1)}>
+                {month}
+              </option>
+            );
+          })}
+        </select>
+        <div id="histogram" />
+        <div id="line" />
+        <div id="pie" />
       </div>
     );
   }
