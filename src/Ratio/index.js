@@ -65,9 +65,6 @@ class Ratio extends Component {
       bindto: '#line',
       data: {
         columns: [this.state.data]
-      },
-      color: {
-        pattern: ['#1f77b4', '#aec7e8']
       }
     });
     let pie = c3.generate({
@@ -83,29 +80,6 @@ class Ratio extends Component {
       }
     });
   }
-  // createLine(data, type) {
-  //   let renderData = ['Ratio'];
-  //   for (let i = 0; i < data.length; i++) {
-  //     let month = data[i][5] + data[i][6];
-  //     if (month === this.state.month) {
-  //       renderData.push(data[i][2]);
-  //       this.setState({
-  //         data: renderData
-  //       });
-  //     }
-  //   }
-
-  //   let histogram = c3.generate({
-  //     bindto: '#histogram',
-  //     data: {
-  //       columns: [this.state.data],
-  //       type: type
-  //     },
-  //     bar: {
-  //       width: 1
-  //     }
-  //   });
-  // }
 
   handleInputChange = name => event => {
     this.setState({
@@ -124,21 +98,25 @@ class Ratio extends Component {
   render() {
     return (
       <div className="ratio-container">
-        <div className="ratio-header">Ratio</div>
-        <select
-          name="month"
-          id="month"
-          value={this.state.categoryInput}
-          onChange={this.handleInputChange('month')}
-        >
-          {this.state.months.map((month, key) => {
-            return (
-              <option key={key} value={'0' + (key + 1)}>
-                {month}
-              </option>
-            );
-          })}
-        </select>
+        <div className="ratio-header">
+          <div className="title">Ratio</div>
+          <div className="select-container">
+            <select
+              name="month"
+              id="month"
+              value={this.state.categoryInput}
+              onChange={this.handleInputChange('month')}
+            >
+              {this.state.months.map((month, key) => {
+                return (
+                  <option key={key} value={'0' + (key + 1)}>
+                    {month}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
         <div id="histogram" />
         <div id="line" />
         <div id="pie" />

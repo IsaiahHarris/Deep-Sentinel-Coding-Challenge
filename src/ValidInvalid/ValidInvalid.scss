@@ -1,0 +1,14 @@
+.valid-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  #histogram {
+    max-width: 980px;
+    width: 90%;
+  }
+
+  #line {
+    max-width: 980px;
+    width: 90%;
+  }
+}
