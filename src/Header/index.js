@@ -40,7 +40,9 @@ const Header = props => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            Deep Sentinel
+            <Link to="/" className="link">
+              Deep Sentinel
+            </Link>
           </Typography>
           <Button color="inherit">
             <Link to="/ratio" className="link">

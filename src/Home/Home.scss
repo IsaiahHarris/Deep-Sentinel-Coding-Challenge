@@ -1,0 +1,15 @@
+.home-container {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .home-title {
+    font-size: 30px;
+    padding: 10px;
+  }
+  .home-subtitle {
+    font-size: 22px;
+    padding: 5px;
+  }
+}
