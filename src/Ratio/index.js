@@ -30,6 +30,7 @@ class Ratio extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  //create graph functions
   parseData(createGraph) {
     Papa.parse(require('../data/ratio.csv'), {
       download: true,
