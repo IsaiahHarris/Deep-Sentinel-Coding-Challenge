@@ -34,7 +34,6 @@ class ValidInvalid extends Component {
     Papa.parse(require('../data/valid-invalid.csv'), {
       download: true,
       complete: function(results) {
-        console.log(results);
         createGraph(results.data);
       }
     });
